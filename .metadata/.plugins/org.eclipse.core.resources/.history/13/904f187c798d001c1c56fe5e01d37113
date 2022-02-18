@@ -1,0 +1,21 @@
+package com.shopme.admin.user;
+
+import java.util.List;
+
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.shopme.common.entity.User;
+
+public class UserExcelExporter {
+	
+	 private XSSFWorkbook workbook;
+	 private XSSFSheet sheet;
+	 private List<User> listUsers;
+	 
+	 public UserExcelExporter(List<User> listUsers) {
+	        this.listUsers = listUsers;
+	        workbook = new XSSFWorkbook();
+	    }
+	 
+}

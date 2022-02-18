@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+</head>
+<body>
+		<th th:fragments="column_link(fieldName, columnLabel)">	
+			<a class="text-white" 
+				th:href="@{'/users/page/'+${currentPage}+'?sortField=id&sortDir='+ ${fieldName} &sortDir='+${sortDir}}">
+							[[${columnLabel}]]
+			</a>
+				
+			<span th:if="${sortField=='id'}"  th:class="${sortDir=='asc'?'fas fa-sort-up':'fas fa-sort-down'}"></span>
+		</th>
+</body>
+</html>
