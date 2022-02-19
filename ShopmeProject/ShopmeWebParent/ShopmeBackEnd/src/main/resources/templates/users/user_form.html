@@ -98,31 +98,6 @@
 
 	</div>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#buttonCancel").on("click", function() {
-				window.location = "[[@{/users}]]";
-			});
-			$("#fileImage").change(function(){
-				filesize=this.files[0].size;
-				if(filesize>1048576){
-					this.setCustomValidity("You must choose an image less than 1MB!");
-					this.reportValidity();
-				}
-				else{
-					this.setCustomValidity("");
-					showImageThumbnail(this);
-				}
-				
-			});
-		});
-		function showImageThumbnail(fileInput){
-			var file=fileInput.files[0];
-			var reader=new FileReader();
-			reader.onload=function(e){	
-				$("#thumbnail").attr("src",e.target.result);
-			};
-			reader.readAsDataURL(file);
-		}
 		function checkEmailUnique(form) {
 			url = "[[@{/users/check_email}]]";
 			userEmail = $("#email").val();
@@ -161,5 +136,6 @@
 		}
 		
 	</script>
+	<script type="text/javascript" th:src="@{/js/common_form.js}"></script>
 </body>
 </html>
