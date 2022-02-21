@@ -24,7 +24,7 @@ A simple management project
   - update users
   - remove users
   - disable employees
--Editor module
+- Editor module
   - display all categories
   - bootstrap table
   - add new categories
