@@ -37,7 +37,10 @@
 						
 						<th>Category Image</th>
 						
-						<th>Category Name</th>
+						<th><a class="text-white" th:href="@{'/categories?sortDir='+${reserveSortDir}}">Category Name</a>
+							<span th:if="${sortField == fieldName}"  
+			th:class="${sortDir=='asc'?'fas fa-sort-up':'fas fa-sort-down'}"></span>
+						</th>
 						
 						<th>Alias</th>
 						
@@ -55,21 +58,17 @@
 							<img th:src="@{${category.imagePath}}" style="width:100px" class="img-fluid">
 						</td>
 						
-						<td>[[${category.name}]]</td>
+						<td>
+							[[${category.name}]]
+						</td>
 						
 						<td>[[${category.alias}]]</td>
 						
 						<td>
-							<a th:if="${category.enabled==true}" class="fas fa-check-circle fa-2x icon-green" 
-							 title="Disable this user" href=""></a>
-							<a th:if="${category.enabled==false}" class="fas fa-circle fa-2x icon-dark" 
-							 title="Enable this user" href=""></a>
-						</td> 
-						
+							<div th:replace="fragments :: category_status"></div>
+						</td>
 						<td>
-							<a class="fas fa-edit fa-2x icon-green"  title="Edit this user" href=""></a>
-							&nbsp; 
-							<a class="fas fa-trash fa-2x icon-dark link-delete" title="Delete this user" href=""></a>
+							<div th:replace="fragments :: category_actions"></div>
 						</td>
 					</tr>
 				
