@@ -181,7 +181,7 @@ public class UserController {
 	}
 
 	@GetMapping("/users/{id}/enabled/{status}")
-	public String deleteUser(@PathVariable(name = "id") Integer id, @PathVariable(name = "status") boolean enabled,
+	public String updateEnabledStatus(@PathVariable(name = "id") Integer id, @PathVariable(name = "status") boolean enabled,
 			RedirectAttributes redirectAttributes) {
 		String status = enabled ? "enabled" : "disabled";
 		String message = "The user ID " + id + " has been " + status;
