@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.shopme.admin.user.UserNotFoundException;
 import com.shopme.common.entity.Category;
 
 @Service
@@ -69,6 +71,15 @@ public class CategoryService {
 	}
 	
 	public Category save(Category category) {
+		
+		boolean isUpdatingCategory = (category.getId() != null);
+		if (isUpdatingCategory) {
+			Category existingCategory = categoryRepo.findById(category.getId()).get();
+				
+			if (category.getImage()==null) {
+				category.setImage(existingCategory.getImage());
+			}
+		}
 		return categoryRepo.save(category);
 	}
 	
@@ -86,4 +97,21 @@ public class CategoryService {
 			printChildren(categoriesUsedInForm,subCategory, newSubLevel);
 		}
 	}
+	
+	public Category findById(Integer id) throws UserNotFoundException {
+		try {
+			return categoryRepo.findById(id).get();
+		} catch (Exception e) {
+			throw new UserNotFoundException("Could not find any category with ID = " + id);
+		}
+	}
+	
+	public Category findByName(String name) {
+		return categoryRepo.findByName(name);
+	}
+	
+	public Category findByAlias(String alias) {
+		return categoryRepo.findByAlias(alias);
+	}
+
 }
