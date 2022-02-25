@@ -63,7 +63,7 @@
 		<div th:fragment="category_actions" class="text-center m-3" th:remove="tag">
 			<a class="fas fa-edit fa-2x icon-green" th:href="@{'/categories/edit/'+ ${category.id}}" title="Edit this category"></a>
 							&nbsp; 
-			<a class="fas fa-trash fa-2x icon-dark link-delete" th:href="@{'/categories/delete/'+ ${category.id}}" title="Delete this category" th:userId="${category.id}"></a>
+			<a class="fas fa-trash fa-2x icon-dark link-delete" th:href="@{'/categories/delete/'+ ${category.id}}" title="Delete this category" th:catId="${category.id}"></a>
 		</div>
 </body>
 </html>	
