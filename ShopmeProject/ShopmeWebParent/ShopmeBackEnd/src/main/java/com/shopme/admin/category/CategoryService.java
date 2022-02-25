@@ -62,8 +62,7 @@ public class CategoryService {
 				name+="--";
 			}
 			name+=subCategory.getName();
-			subCategory.setName(name);
-			hierarchicalCategories.add(Category.copyIdAndName(subCategory));
+			hierarchicalCategories.add(Category.copyFull(subCategory,name));
 		
 			listSubHierarchicalCategories(hierarchicalCategories, subCategory, newSubLevel,sortDir);
 		}
@@ -180,6 +179,13 @@ public class CategoryService {
 	
 	public void updateCategoryEnabledStatus(Integer id, boolean enabled) {
 		categoryRepo.updateEnabledStatus(id, enabled);
+	}
+	public void delete(Integer id) throws UserNotFoundException {
+		Integer countById = categoryRepo.countById(id);
+		if (countById == null || countById == 0) {
+			throw new UserNotFoundException("Could not find any category with ID = " + id);
+		}
+		categoryRepo.deleteById(id);
 	}
 	
 }
