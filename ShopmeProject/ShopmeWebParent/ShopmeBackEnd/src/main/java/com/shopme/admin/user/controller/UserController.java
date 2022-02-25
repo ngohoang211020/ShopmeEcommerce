@@ -1,9 +1,6 @@
 package com.shopme.admin.user.controller;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,11 +20,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lowagie.text.DocumentException;
 import com.shopme.admin.FileUploadUtil;
+import com.shopme.admin.exportcsv.UserCsvExporter;
+import com.shopme.admin.exportexcel.UserExcelExporter;
+import com.shopme.admin.exportpdf.UserPDFExporter;
 import com.shopme.admin.user.UserNotFoundException;
 import com.shopme.admin.user.UserService;
-import com.shopme.admin.user.export.UserCsvExporter;
-import com.shopme.admin.user.export.UserExcelExporter;
-import com.shopme.admin.user.export.UserPDFExporter;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
 
@@ -88,14 +85,6 @@ public class UserController {
 	
 	@GetMapping("/users/export/excel")
 	public void exportToExcel(HttpServletResponse response) throws IOException {
-		response.setContentType("application/octet-stream");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
-         
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
-        response.setHeader(headerKey, headerValue);
-         
         List<User> listUsers = service.listAll();
          
         UserExcelExporter excelExporter = new UserExcelExporter(listUsers);
@@ -106,14 +95,6 @@ public class UserController {
 	
 	  @GetMapping("/users/export/pdf")
 	    public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
-	        response.setContentType("application/pdf");
-	        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-	        String currentDateTime = dateFormatter.format(new Date());
-	         
-	        String headerKey = "Content-Disposition";
-	        String headerValue = "attachment; filename=users_" + currentDateTime + ".pdf";
-	        response.setHeader(headerKey, headerValue);
-	         
 	        List<User> listUsers = service.listAll();
 	         
 	        UserPDFExporter exporter = new UserPDFExporter(listUsers);

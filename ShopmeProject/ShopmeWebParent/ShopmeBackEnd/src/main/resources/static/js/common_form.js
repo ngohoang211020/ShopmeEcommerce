@@ -1,8 +1,8 @@
 	
 	$(document).ready(function() {
-			$("#buttonCancel").on("click", function() {
+			/*$("#buttonCancel").on("click", function() {
 				window.location = "[[@{/users}]]";
-			});
+			});*/
 			$("#fileImage").change(function(){
 				filesize=this.files[0].size;
 				if(filesize>1048576){
