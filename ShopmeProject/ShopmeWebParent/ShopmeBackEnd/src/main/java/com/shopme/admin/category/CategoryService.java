@@ -8,6 +8,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +21,12 @@ import com.shopme.common.entity.Category;
 @Service
 @Transactional
 public class CategoryService {
-	
+	public static final int CATEGORIES_PER_PAGE=4;
+
 	@Autowired
 	private CategoryRepository categoryRepo;
 
-	public List<Category> listAll(String sortDir) {
+	public List<Category> listAll(String sortDir){
 		Sort sort=Sort.by("name");
 		
 		if (sortDir == null || sortDir.isEmpty()) {
@@ -34,6 +38,29 @@ public class CategoryService {
 		else if(sortDir.equals("desc")) sort=sort.descending();
 		
 		List<Category> rootCategories= categoryRepo.findRootCategories(sort);
+		
+		return listHierarchicalCategories(rootCategories,sortDir);
+	}
+	
+	public List<Category> listByPage(CategoryPageInfo categoryPageInfo, Integer pageNum ,String sortDir) {
+		Sort sort=Sort.by("name");
+		
+		if (sortDir == null || sortDir.isEmpty()) {
+			sort = sort.ascending(); 
+		}
+		
+		else if(sortDir.equals("asc")) sort=sort.ascending();
+		
+		else if(sortDir.equals("desc")) sort=sort.descending();
+		
+		Pageable pageable=PageRequest.of(pageNum-1, CATEGORIES_PER_PAGE,sort);
+		Page<Category> pageCategories= categoryRepo.findRootCategories(pageable);
+		
+		categoryPageInfo.setTotalElements(pageCategories.getTotalElements());
+		categoryPageInfo.setTotalPages(pageCategories.getTotalPages());
+		
+		List<Category> rootCategories=pageCategories.getContent();
+		
 		return listHierarchicalCategories(rootCategories,sortDir);
 	}
 	private List<Category> listHierarchicalCategories(List<Category> rootCategories,String sortDir){
