@@ -70,13 +70,12 @@
 	</div>
 	<script type="text/javascript">
 	
-	$(document).ready(function() {
-			$("#buttonCancel").on("click", function() {
-				window.location = "[[@{/categories}]]";
-			});
-		
-		});
-	
+	$(document).ready(function () {
+		    $("#buttonCancel").on("click", function () {
+		        window.location = "[[@{/categories}]]";
+		    });
+	});
+	 
 	function checkUnique(form) {
 		url = "[[@{/categories/check_unique}]]";
 		catId = $("#id").val();

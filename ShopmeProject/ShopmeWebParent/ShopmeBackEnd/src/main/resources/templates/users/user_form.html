@@ -83,12 +83,11 @@
 
 	</div>
 	<script type="text/javascript">
-	$(document).ready(function() {
-		$("#buttonCancel").on("click", function() {
-			window.location = "[[@{/users}]]";
-		});
-	
-	});
+	$(document).ready(function () {
+	    $("#buttonCancel").on("click", function () {
+	        window.location = "[[@{/users}]]";
+	    });
+});
 		function checkEmailUnique(form) {
 			url = "[[@{/users/check_email}]]";
 			userEmail = $("#email").val();
